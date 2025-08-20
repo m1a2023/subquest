@@ -9,14 +9,14 @@
 namespace todo {
     class TodoItem {
     public:
-        TodoItem(QVariant data, TodoItem *parent);
+        TodoItem(QVariant data, TodoItem *parent = nullptr);
         TodoItem(TodoItem &&item);
         TodoItem& operator=(TodoItem &&item);
         ~TodoItem();
 
         void appendChild(std::unique_ptr<TodoItem> &&child);
 
-        inline std::vector<TodoItem *>& child();
+        TodoItem* child(int row) const;
         inline TodoItem* parent() const;
         inline int childCount() const;
         int row() const;
@@ -26,11 +26,14 @@ namespace todo {
 
         TodoItem(TodoItem &item) = delete;
         TodoItem& operator=(TodoItem &item) = delete;
+
+    protected:
+        std::vector<TodoItem*>& internalTodos();
+
     private:
         std::vector<TodoItem *> m_child;
         TodoItem *m_parent;
         QVariant m_data;
-
     };
 } // todo
 

@@ -39,13 +39,23 @@ namespace todo {
         m_child.push_back(child.get());
     }
 
-    std::vector<TodoItem *>& TodoItem::child() {
+    TodoItem* TodoItem::child(int row) const {
+        return row >= 0 && row < childCount() ? m_child.at(row) : nullptr;
+    }
+
+    std::vector<TodoItem *>& TodoItem::internalTodos() {
         return m_child;
     }
 
     TodoItem *TodoItem::parent() const { return m_parent; }
 
-    int TodoItem::childCount() const { return m_child.size(); }
+    int TodoItem::childCount() const {
+        return static_cast<int>(m_child.size());
+    }
+
+    int TodoItem::row() const {
+        return 0;
+    }
 
     QVariant TodoItem::data(int column) const { return m_data; }
 
@@ -58,7 +68,7 @@ namespace todo {
     void TodoItem::removeChildRecursively() const {
         for (const auto &item : m_child) {
             auto *tmp = item;
-            if (! tmp->child().empty()) {
+            if (! tmp->internalTodos().empty()) {
                 tmp->removeChildRecursively();
             }
             delete tmp;

@@ -8,8 +8,6 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 COMPONENTS
-        Qml
-        Quick
         Gui
         Widgets
         Core
@@ -34,7 +32,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-        Qt6::Qml Qt6::Quick Qt6::Gui Qt6::Widgets Qt6::Core
+        Qt6::Gui Qt6::Widgets Qt6::Core
 )
 
 target_sources(${PROJECT_NAME} PRIVATE ${RESOURCES})
